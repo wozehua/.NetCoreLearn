@@ -49,7 +49,9 @@ namespace StudentCoreMvc
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            //我们在真实的项目中通常不适用这个方法
+            //因为这个run 通常是一个简单的方法
+            //在真实的项目中我们通常使用app.use
             app.Run(async (context) =>
             {
                 //IConfiguration configuration
