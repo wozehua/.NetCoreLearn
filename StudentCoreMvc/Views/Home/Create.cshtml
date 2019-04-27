@@ -1,0 +1,21 @@
+﻿@model Student
+@{
+    Layout = null;
+}
+<link href="@Url.Content("~/node_modules/bootstrap/dist/css/bootstrap.min.css")" rel="stylesheet" />
+<form method="post">
+    <input asp-for="FirstName" />
+    @* asp-validation-for 验证信息如果不通过 会把错误信息显示出来 *@
+    <span asp-validation-for="FirstName"> </span>
+    <input asp-for="DateTime" />
+    <select asp-for="Sex" asp-items="Html.GetEnumSelectList<Gender>()"></select>
+    @* 这个就是验证Model 级别的错误信息 *@
+    @*类似于 asp.net MVC 中的 @Html.ValidationSummary()*@
+    @*要在方法中设置错误级别的信息可以这样设置 ModelState.AddModelError()*@
+    <div asp-validation-summary="ModelOnly"></div>
+    <button type="submit">保存</button>
+
+</form>
+<script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="~/node_modules/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="~/node_modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>

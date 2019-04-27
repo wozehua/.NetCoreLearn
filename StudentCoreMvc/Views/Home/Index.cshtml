@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Student>
+@{
+
+}
+@foreach (var student in Model)
+{
+    <li>@student.FirstName-@student.SecondName<a asp-action="Index" asp-controller="Home" asp-route-id="1"></a></li>
+}
+
+<a asp-action="Create">
+
+</a>
+调用组件方式1：@await Component.InvokeAsync("Welcome")
+@*调用组件方式1：@await Component.InvokeAsync("Welcome","组件如果有请求参数这边放的是传递的参数")*@
+调用组件方式2：<vc:welcome></vc:welcome>
+@*比如组件命名有两个(如WelcomeStudents) 英文组成的话 应该是这样调用<vc:welcome-students></vc:welcome-students>*@
+还有就是这边用vc这种方式调用的话 都要改成小写
+@* 使用vc 这种调用方式的话 要在_ViewImports.cshtml 中引入命名空间和引入TagHelper 一样，但是这个
+    是我们自己写的组件就要引用我们项目的命名空间 如 @addTagHelper *,StudentCoreMvc *@
