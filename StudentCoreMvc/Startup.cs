@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,8 +43,11 @@ namespace StudentCoreMvc
 
             //一下两个都是获取ConnetionString:DefaultConnetion 下的DefaultConnetion 信息
             //var connectionName = _configuration["ConnetionString:DefaultConnetion"];
-            var connectionName = _configuration.GetConnectionString("DefaultConnetion");
+            var connectionName = _configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DbContext>(options => options.UseSqlServer(connectionName));
+
+            services.AddDbContext<IdentityDbContext>(options =>
+                options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("StudentCoreMvc")));
 
             //AddTransient 就是每次方法或者类请求 都会生成一个新的注册实例
             //services.AddTransient<IWelcomeServices, WelcomeService>();
@@ -110,7 +114,7 @@ namespace StudentCoreMvc
             //https://docs.microsoft.com/zh-cn/aspnet/core/client-side/using-gulp?view=aspnetcore-2.2
             app.UseStaticFiles(new StaticFileOptions()
             {
-                //要应用其他路径的话 这个RequestPath 是一定要写。
+                //要应用其他路径的话 这个RequestPath 是一定要写,指向目录
                 RequestPath = "/node_modules",
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "node_modules")),
             });
